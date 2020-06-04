@@ -1,0 +1,39 @@
+var helper = new Helpers();
+var utilities = new Utilities();
+
+$(document).ready(function() {
+	checkLogged();
+	auth();
+});
+
+function checkLogged() {
+   console.log(window.localStorage.getItem('logged'));
+	if(window.localStorage.getItem('logged') !== null) {
+               location.href='/';
+	}
+}
+
+function auth(){
+	$("#submitAuth").click(function(e){
+		username = $("#inputUsername").val();
+		password = $("#inputPassword").val();
+		if(username !== '' && password !== '' ){
+			var loginStatus = false;
+
+            var data = helper.postRequestData(API_URL + 'user', new User(null,username,password));
+            utilities.request(data, function(data, textStatus, xhr) {
+				if(data.status === 200) {
+					window.localStorage.setItem('logged', JSON.stringify(Object.assign(new User(), data.objects)));
+					checkLogged();
+
+				} else {
+					helper.sendAlert('error','Incorrect username or password');
+				}
+			});
+			
+		} else {
+			helper.sendAlert('error', 'Please type your credentials');
+		}
+		
+	});
+}

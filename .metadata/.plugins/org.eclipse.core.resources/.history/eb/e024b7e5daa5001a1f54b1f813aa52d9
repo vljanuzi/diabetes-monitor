@@ -1,0 +1,25 @@
+var ctx;
+var loggedUser;
+checkLogged();
+$(document).ready(function() {
+	
+ctx = document.getElementById('myChart').getContext('2d');
+
+$("#logOutButton").click(function(){
+	window.localStorage.removeItem('logged');
+	location.href='/login.html';
+});
+
+hideAdminOperations();
+});
+
+
+function checkLogged() {
+   console.log(window.localStorage.getItem('logged'));
+	if(window.localStorage.getItem('logged') === null) {
+               location.href='/login.html';
+	} else {
+		loggedUser = Object.assign(new User(), JSON.parse(window.localStorage.getItem('logged')));
+		$("#user").text("Hi, "+loggedUser.name);
+	}
+}

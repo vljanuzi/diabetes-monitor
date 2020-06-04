@@ -1,0 +1,81 @@
+class Helpers {
+
+	createChart(entity, data, title) {
+
+		var chart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			    	labels: entity.map(a => a.date),
+			    	datasets: [{
+			    		label: title,
+			    		backgroundColor: 'rgb(255, 99, 132)',
+			    		borderColor: 'rgb(255, 99, 132)',
+			    		data: data
+			    	}]
+			    },
+			    options: {aspectRatio: 0}
+			});
+
+		$("#exampleModalLong").modal('show');
+	}
+
+	sendAlert(status, title){
+		Swal.fire({
+			icon: status,
+			title: title,
+			showConfirmButton: false,
+		    timer: 1500
+		})
+	}
+
+	getRequestData(url){
+		var data = {
+				async: false,
+				crossDomain: true,
+				url: url,
+				method: "GET",
+				headers: {
+			  }
+			}
+
+			if(typeof loggedUser !== 'undefined') {
+				data.headers['Authorization'] = "Bearer " + loggedUser.token;
+			}
+		return data;
+	}
+
+	postRequestData(full_url, dataSent){
+
+		var data = {
+				crossDomain: true,
+				type : 'POST',
+				headers: { 
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'					
+				},
+				url: full_url,
+				data: JSON.stringify(dataSent),
+				dataType: 'json'
+			};
+
+			if(typeof loggedUser !== 'undefined') {
+				data.headers['Authorization'] = "Bearer " + loggedUser.token;
+			}
+
+		return data;
+	}
+
+	sendErrorMessage(id, message) {
+		var hashtag = '#';
+		var error = document.getElementById(id);
+			error.innerHTML = "<span>"+ message;
+			setTimeout(function(){
+  				$(hashtag.concat(id)).remove();
+			}, 2000);
+	}
+
+	setMeasure(measure){
+		var measureHTML = document.getElementById("measure");
+		measureHTML.innerHTML="<span>" + measure;
+	}
+}

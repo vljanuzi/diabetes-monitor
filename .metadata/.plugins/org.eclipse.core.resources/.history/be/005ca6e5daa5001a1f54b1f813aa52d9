@@ -1,0 +1,70 @@
+
+.container-index {
+    margin-top: 10em;
+    margin-bottom: 10em;
+}
+
+.card {
+    margin-bottom: 3em;
+}
+
+.card-glucose-top{
+    background-color: #f7dd72;
+    padding: 5em;
+    text-align: center;
+}
+
+.card-carb-top{
+    background-color: #A5C882;
+    padding: 5em;
+    text-align: center;
+}
+
+.card-med-top{
+    background-color: #5AB1BB;
+    padding: 5em;
+    text-align: center;
+}
+
+.btn-secondary {
+    background-color:#dbd5d5;
+    border-color: #dad5d5;
+    text-align: -webkit-center;
+    width: -webkit-fill-available;
+    color: #37424d;
+
+}
+
+.btn-secondary:hover{
+    background-color:#37424d;
+    border-color: #282c30;
+}
+
+.submit{
+    border-left: none;
+    background-color: #37424d ;
+}
+
+.numb{
+    border-right: none;
+}
+
+.closeButton {
+    background-color:#37424d;
+    border-color: #282c30; 
+    color:white;
+}
+
+.btn-light{
+    background-color:white;
+    margin: 1em;
+}
+
+.text-danger{
+    font-size: x-small;
+    margin-left: 0.2em;
+}
+
+.text-muted {
+    width: -webkit-fill-available;
+}

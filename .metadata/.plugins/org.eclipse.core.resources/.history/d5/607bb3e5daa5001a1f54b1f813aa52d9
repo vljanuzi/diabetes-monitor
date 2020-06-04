@@ -1,0 +1,52 @@
+var utilities = new Utilities();
+var helper = new Helpers();
+
+class GlucoseServices {
+
+	getGlucoses(byDays = null) {
+
+		var self = this;
+		var fullUrl = API_URL + "glucose";
+
+        if(byDays !== null) {
+            fullUrl += "/getTime?days=" + byDays;
+        }
+
+        var data = helper.getRequestData(fullUrl);
+		utilities.request(data,function(data, textStatus, xhr) {
+			self.glucoses = [];
+			data.forEach(function(e) {
+				self.glucoses.push(Object.assign(new  Glucose(),e));
+            });
+			helper.createChart(self.glucoses, self.glucoses.map(b => b.level), 'Glucose Levels');
+		});
+	}
+
+	addGlucoses(glucose = null, update = false) {
+
+		var full_url = API_URL + "glucose/add";
+		if(update) {
+			full_url = API_URL + "glucose/update"
+		}
+
+		var data = helper.postRequestData(full_url, glucose);
+		utilities.request(data, function(data, textStatus, xhr) {
+			if(xhr.status === 200) {
+				helper.sendAlert('success', 'Glucose level for today has been added')
+			} else if(xhr.status === 204) {
+				helper.sendAlert('error', 'Already added the level of glucose for today')
+			} else {
+				helper.sendAlert('error','There is no data for this date');	
+			}
+		});
+	}
+
+	deleteGlucoses(date = null) {
+		var data = helper.postRequestData(API_URL + "glucose/delete", date);
+		utilities.request(data, function(data, textStatus, xhr) {
+			if(xhr.status === 200) {
+				helper.sendAlert('success', 'Glucose level deleted')
+			}
+		});
+	}
+}

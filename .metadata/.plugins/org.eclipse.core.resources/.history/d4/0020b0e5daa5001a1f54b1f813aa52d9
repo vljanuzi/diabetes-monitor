@@ -1,0 +1,63 @@
+var utilities = new Utilities();
+var helper = new Helpers();
+
+class CarbohydrateServices {
+
+	getCarbohydrates(byDays = null, username, password) {
+
+		var self = this;
+		var fullUrl = API_URL + "carbohydrate";
+
+        if(byDays !== null) {
+            fullUrl += "/getTime?days=" + byDays;
+        }
+
+        var data = helper.getRequestData(fullUrl);
+		utilities.request(data,function(data, textStatus, xhr) {
+
+			if(xhr.status === 200){
+				self.carbohydrates = [];
+				data.forEach(function(e) {
+          			self.carbohydrates.push(Object.assign(new  Carbohydrate(),e));
+          		});
+          		helper.createChart(self.carbohydrates, self.carbohydrates.map(b => b.amount), 'Carbohydate Intake');
+			} else  if(xhr.status === 401){
+				helper.sendAlert('error','Access Denied');
+			} else  if(xhr.status === 403){
+				helper.sendAlert('error','Access Forbidden for everyone');
+			} else  {
+				helper.sendAlert('error','Server Error');
+			}
+			
+		});
+	}
+
+	addCarbohydrate(carbohydrate = null, update = false) {
+
+		var full_url = API_URL + "carbohydrate/add";
+
+		if(update) {
+			full_url = API_URL + "carbohydrate/update"
+		}
+
+		var data = helper.postRequestData(full_url, carbohydrate);
+		utilities.request(data, function(data, textStatus, xhr) {
+			if(xhr.status === 200) {
+				helper.sendAlert('success', 'Amount of carbs for today has been added');
+			} else if(xhr.status === 204) {
+				helper.sendAlert('error','You already added the amount for today')
+			} else {
+				helper.sendAlert('error','There is no data for this date');
+			}
+		});
+	}
+
+	deleteCarbohydrate(date = null) {
+		var data = helper.postRequestData(API_URL + "carbohydrate/delete", date);
+		utilities.request(data, function(data, textStatus, xhr) {
+			if(xhr.status === 200) {
+				helper.sendAlert('success', 'Amount has been deleted');
+			}
+		});
+	}
+}

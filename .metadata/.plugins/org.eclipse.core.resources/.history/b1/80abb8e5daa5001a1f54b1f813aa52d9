@@ -1,0 +1,54 @@
+	var utilities = new Utilities();
+	var helper = new Helpers();
+
+	class MedicationServices {
+
+		getMedications(byDays = null) {
+
+			var self = this;
+            var fullUrl = API_URL + "medication";
+
+            if(byDays !== null) {
+            	fullUrl += "/getTime?days=" + byDays;
+            }
+
+            var data = helper.getRequestData(fullUrl);
+			utilities.request(data,function(data, textStatus, xhr) {
+				self.medications = [];
+				data.forEach(function(e) {	
+	          	self.medications.push(Object.assign(new Medication(),e));
+	          });
+				helper.createChart(self.medications, self.medications.map(b => b.dose), 'Medication Doses');
+			});
+		}
+
+		addMedication(medication = null, update = false) {
+
+			var full_url = API_URL + "medication/add";
+			if(update) {
+				full_url = API_URL + "medication/update"
+			}
+
+			var self = this;
+			var data = helper.postRequestData(full_url, medication);
+			utilities.request(data, function(data, textStatus, xhr) {
+				if(xhr.status === 200) {
+					helper.sendAlert('success','Your medication dose for the day has been added');
+				} else if(xhr.status === 204) {
+					helper.sendAlert('error','You have already added your dose for the day');
+				} else {
+					helper.sendAlert('error','There is no data for this date');
+				}
+			});
+		}
+
+		deleteMedication(date = null) {
+
+			var self = this;
+			var data = helper.postRequestData(API_URL + "medication/delete", date);
+			utilities.request(data, function(data, textStatus, xhr) {
+				if(xhr.status === 200) {
+					helper.sendAlert('success','Deleted successful');				}
+			});
+		}
+	}

@@ -1,0 +1,14 @@
+class Utilities {
+
+	request(data, callback) {
+		var request = $.ajax(data);
+
+		request.done(function( msg, textStatus, xhr ) {
+			return callback(msg, textStatus, xhr);
+		});
+
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
+	}
+}

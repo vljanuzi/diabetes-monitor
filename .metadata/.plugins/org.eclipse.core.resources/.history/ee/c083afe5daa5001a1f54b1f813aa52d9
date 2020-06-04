@@ -1,0 +1,65 @@
+var carbService = new CarbohydrateServices();
+var helper = new Helpers();
+
+$(document).ready(function() {
+	getCarbohydratesList();
+	addCarbohydrate();
+	updateCarbohydrate();
+	deleteCarbohydrate();
+});
+
+function getCarbohydratesList() {
+	$("#checkCarbButton").click(function(e){
+		helper.setMeasure("gr");
+		if($("#carb_days").val() !== '') {
+			if($("#carb_days").val() >= 0) {
+				carbService.getCarbohydrates($("#carb_days").val());
+			} else {
+				helper.sendErrorMessage("errorCheckCarb", "Please enter a positive number");
+			}
+		} else {
+			carbService.getCarbohydrates();
+		}
+	});
+}
+
+function addCarbohydrate() {
+	$("#addCarbButton").click(function(e) {
+		if($("#carb_amount").val() >= 0 && $("#carb_amount").val() !== ''){
+			carbService.addCarbohydrate(new Carbohydrate(null,$("#carb_amount").val(),null));
+		}
+		else {
+			helper.sendErrorMessage("errorAddCarb", "Please enter a valid number");           
+		}
+	});
+}
+
+function updateCarbohydrate() {
+	$("#carbUpdateButton").click(function(e) {
+		if($("#carb_date").val() == ''){
+			helper.sendErrorMessage("errorUpdateDateCarb", "Please enter a date");
+		}
+		if($("#carb_amount_update").val() >= 0 && $("#carb_amount_update").val() !== ''){
+			carbService.addCarbohydrate(new Carbohydrate(null,$("#carb_amount_update").val(),$("#carb_date").val()),true);
+		}
+		else {
+			helper.sendErrorMessage("errorUpdateLevelCarb", "Please enter a valid number");
+		}
+	});
+}
+
+function deleteCarbohydrate() {
+	$("#carbDeleteButton").click(function(e) {
+		if($("#carb_delete_date").val() == ''){
+				helper.sendErrorMessage("errorDeleteCarb", "Please enter a date");
+		} else {
+			carbService.deleteCarbohydrate(new Carbohydrate(null,null,$("#carb_delete_date").val()));
+		}
+	});
+}
+
+function hideAdminOperations(){
+	if(loggedUser.role !== 'admin') {
+		$('.admin').remove();
+	}
+}

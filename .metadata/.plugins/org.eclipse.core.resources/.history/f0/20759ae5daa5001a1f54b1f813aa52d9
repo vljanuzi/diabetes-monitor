@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Diabetes Monitor</title>
+</head>
+
+<body>
+
+    <!-- As a link -->
+    <nav class="navbar navbar-dark bg-dark">
+
+            <a class="navbar-brand">Diabetes Monitor</a>
+            <div class="flex">
+                <span id="user" style="color:white; padding: 1em"></span>
+                <button type="button" class="btn btn-danger" id="logOutButton">
+                    Log out
+                </button>
+            </div>
+
+    </nav>
+
+    <!-- Modal -->
+    <!-- Button trigger modal -->
+    
+    <div class="container container-index">
+
+
+        <div class="row">
+
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-glucose-top">
+                        <h4>GLUCOSE</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#addGlucose" aria-expanded="false" aria-controls="collapseExample">
+                                Add glucose level
+                            </button>
+                        </p>
+                        <div class="collapse" id="addGlucose">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" id="glucose_level" placeholder="Level for today"
+                                        aria-describedby="basic-addon2" required>
+
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="addGlucoseButton" type="button"><i class="fas fa-plus" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorAddGlucose" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#checkGlucose" aria-expanded="false" aria-controls="collapseExample">
+                                Check glucose levels
+                            </button>
+                        </p>
+                        <div class="collapse" id="checkGlucose">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" id="glucose_days" placeholder="Last days to check"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="checkGlucoseButton" type="button"><i class="fas fa-chart-area" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorCheckGlucose" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#updateGlucose" aria-expanded="false" aria-controls="collapseExample">
+                                Update glucose level
+                            </button>
+                        </p>
+                        <div class="collapse" id="updateGlucose">
+                            <div class="card card-body">
+                                <div class="row">
+                                    <small id="emailHelp" class="form-text text-muted">Date to update its level</small>
+                                    <input class="form-control" type="date" value="today" id="glucose_date"
+                                        >
+                                </div>
+                                <span id="errorUpdateDateGlucose" class="text-danger" style="margin: 1em ;"></span>
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" placeholder="Update level" id="glucose_level_update"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="glucoseUpdateButton" type="button"><i class="fas fa-pencil-alt"  style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorUpdateLevelGlucose" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#deleteGlucose" aria-expanded="false" aria-controls="collapseExample">
+                                Delete glucose level
+                            </button>
+                        </p>
+                        <div class="collapse" id="deleteGlucose">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <small id="emailHelp" class="form-text text-muted">Date to delete its level</small>
+                                    <input type="date" class="numb form-control" aria-describedby="basic-addon2" id="glucose_delete_date">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="glucoseDeleteButton" type="button"><i class="far fa-trash-alt" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorDeleteGlucose" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="card">
+                                       <div class="card-carb-top">
+                        <h4>CARBOHYDRATE</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#addCarb" aria-expanded="false" aria-controls="collapseExample">
+                                Add carbohydrate amount
+                            </button>
+                        </p>
+                        <div class="collapse" id="addCarb">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" id="carb_amount" placeholder="Amount for today"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="addCarbButton" type="button"><i class="fas fa-plus" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorAddCarb" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#checkCarb" aria-expanded="false" aria-controls="collapseExample">
+                                Check carbohydrate amount
+                            </button>
+                        </p>
+                        <div class="collapse" id="checkCarb">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" id="carb_days" placeholder="Last days to check"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="checkCarbButton" type="button"><i class="fas fa-chart-area" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorCheckCarb" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#updateCarb" aria-expanded="false" aria-controls="collapseExample">
+                                Update carbohydrate amount
+                            </button>
+                        </p>
+                        <div class="collapse" id="updateCarb">
+                            <div class="card card-body">
+                                <div class="row">
+                                    <small id="emailHelp" class="form-text text-muted">Date to update its amount</small>
+                                    <input class="form-control" type="date" value="today" id="carb_date"
+                                        >
+                                </div>
+                                <span id="errorUpdateDateCarb" class="text-danger" style="margin: 1em ;"></span>
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" placeholder="Update level" id="carb_amount_update"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="carbUpdateButton" type="button"><i class="fas fa-pencil-alt"  style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorUpdateLevelCarb" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#deleteCarb" aria-expanded="false" aria-controls="collapseExample">
+                                Delete carbohydrate amount
+                            </button>
+                        </p>
+                        <div class="collapse" id="deleteCarb">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <small id="emailHelp" class="form-text text-muted">Date to delete its amount</small>
+                                    <input type="date" class="numb form-control" aria-describedby="basic-addon2" id="carb_delete_date">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="carbDeleteButton" type="button"><i class="far fa-trash-alt" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorDeleteCarb" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="card">
+                                        <div class="card-med-top">
+                        <h4>MEDICATION</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#addMed" aria-expanded="false" aria-controls="collapseExample">
+                                Add medication dose
+                            </button>
+                        </p>
+                        <div class="collapse" id="addMed">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" id="medication_dose" placeholder="Dose for today"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="addMedicationButton" type="button"><i class="fas fa-plus" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorAddMed" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#checkMed" aria-expanded="false" aria-controls="collapseExample">
+                                Check medicaion doses
+                            </button>
+                        </p>
+                        <div class="collapse" id="checkMed">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" id="medication_days" placeholder="Last days to check"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="checkMedicationButton" type="button"><i class="fas fa-chart-area" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorCheckMed" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#updateMed" aria-expanded="false" aria-controls="collapseExample">
+                                Update medication dose
+                            </button>
+                        </p>
+                        <div class="collapse" id="updateMed">
+                            <div class="card card-body">
+                                <div class="row">
+                                    <small id="emailHelp" class="form-text text-muted">Date to update its dose</small>
+                                    <input class="form-control" type="date" value="now" id="medication_date">
+                                </div>
+                                <span id="errorUpdateDateMed" class="text-danger"></span>
+                                <div class="input-group">
+                                    <input type="number" class="numb form-control" placeholder="Update level" id="medication_dose_update"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="medicationUpdateButton" type="button"><i class="fas fa-pencil-alt"  style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorUpdateLevelMed" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p>
+                            <button class="admin btn btn-secondary" type="button" data-toggle="collapse"
+                                data-target="#deleteMed" aria-expanded="false" aria-controls="collapseExample">
+                                Delete medication dose
+                            </button>
+                        </p>
+                        <div class="collapse" id="deleteMed">
+                            <div class="card card-body">
+                                <div class="input-group">
+                                    <small id="emailHelp" class="form-text text-muted">Date to delete its dose</small>
+                                    <input type="date" class="numb form-control" aria-describedby="basic-addon2" id="medication_delete_date">
+                                    <div class="input-group-append">
+                                        <button class="submit btn btn-outline-secondary" id="medicationDeleteButton" type="button"><i class="far fa-trash-alt" style="color: white"></i></button>
+                                    </div>
+                                </div>
+                                <span id="errorDeleteMed" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" style="width: 100% !important;" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Diabetes Data Chart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <span id="measure"></span>
+                <canvas id="myChart" style="max-height: 40rem"></canvas>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://kit.fontawesome.com/5c97011894.js" crossorigin="anonymous"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/utilities.js"></script>
+    <script src="js/helpers.js"></script>
+    <script src="js/constraints.js"></script>
+    <script src="js/carbohydrateServices.js"></script>
+    <script src="js/medicationServices.js"></script>
+    <script src="js/glucoseServices.js"></script>
+    <script src="js/eventGlucose.js"></script>
+    <script src="js/carbEvents.js"></script>
+    <script src="js/medicationEvents.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

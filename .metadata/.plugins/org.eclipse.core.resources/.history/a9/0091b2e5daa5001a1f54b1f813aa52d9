@@ -1,0 +1,60 @@
+var glucoseService = new GlucoseServices();
+var helper = new Helpers();
+
+$(document).ready(function() {
+	getGlucosesList();
+	addGlucose();
+	updateGlucose();
+	deleteGlucose();
+
+});
+
+function getGlucosesList() {
+	$("#checkGlucoseButton").click(function(e){
+		helper.setMeasure("mg/dL");
+		if($("#glucose_days").val() !== '') {
+			if($("#glucose_days").val() >= 0){
+				glucoseService.getGlucoses($("#glucose_days").val());
+			} else {
+				helper.sendErrorMessage("errorCheckGlucose", "Please enter a positive number");
+			}
+		} else {
+			glucoseService.getGlucoses();
+		}
+	});	
+}
+
+function addGlucose() {
+	$("#addGlucoseButton").click(function(e) {
+		if($("#glucose_level").val() >= 0 && $("#glucose_level").val() !== ''){
+			glucoseService.addGlucoses(new Glucose(null, $("#glucose_level").val(),null));
+		} else {
+			helper.sendErrorMessage("errorAddGlucose", "Please enter a valid number");           
+		}
+	});
+}
+
+function updateGlucose() {
+	$("#glucoseUpdateButton").click(function(e) {
+		if($("#glucose_date").val() == ''){
+			helper.sendErrorMessage("errorUpdateDateGlucose", "Please enter a date");
+		}
+		if($("#glucose_level_update").val() >= 0 && $("#glucose_level_update").val() !== '' ) {
+			glucoseService.addGlucoses(new Glucose(null,$("#glucose_level_update").val(),$("#glucose_date").val()), true);
+		} else {
+			helper.sendErrorMessage("errorUpdateLevelGlucose", "Please enter a valid number");
+		}
+	});
+}
+
+function deleteGlucose() {
+	$("#glucoseDeleteButton").click(function(e) {
+			if($("#glucose_delete_date").val() == ''){
+				helper.sendErrorMessage("errorDeleteGlucose", "Please enter a date");
+			} else {
+				glucoseService.deleteGlucoses(new Glucose(null,null, $("#glucose_delete_date").val()));
+			}
+		
+	});
+}
+

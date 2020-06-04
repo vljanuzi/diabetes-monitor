@@ -1,0 +1,59 @@
+var medService = new MedicationServices();
+var helper = new Helpers();
+
+$(document).ready(function() {
+	getMedicationsList();
+	addMedication();
+	updateMedication();
+	deleteMedication();
+});
+
+
+function getMedicationsList() {
+	$("#checkMedicationButton").click(function(e){
+		helper.setMeasure("mg");
+		if($("#medication_days").val() !== '') {
+			if($("#medication_days").val() >= 0) {
+				medService.getMedications($("#medication_days").val());
+			} else {
+				helper.sendErrorMessage("errorCheckMed", "Please enter a positive number");
+			}
+		} else {
+			medService.getMedications();
+		}
+	});
+}
+
+function addMedication() {
+	$("#addMedicationButton").click(function(e) {
+		if($("#medication_dose").val() >= 0 && $("#medication_dose").val() !== ''){
+			medService.addMedication(new Medication(null,$("#medication_dose").val(), null));
+		} else {
+			helper.sendErrorMessage("errorAddMed", "Please enter a valid number");           
+		}
+	});
+}
+
+function updateMedication() {
+		$("#medicationUpdateButton").click(function(e) {
+			if($("#medication_date").val() == ''){
+			helper.sendErrorMessage("errorUpdateDateMed", "Please enter a date");
+		}
+			if($("#medication_dose_update").val() >= 0 && $("#medication_dose_update").val() !== ''){
+				medService.addMedication(new Medication(null,$("#medication_dose_update").val(), 
+												$("#medication_date").val()),true);
+			} else {
+				helper.sendErrorMessage("errorUpdateLevelMed", "Please enter a valid number");
+		}
+	});
+}
+
+function deleteMedication() {
+	$("#medicationDeleteButton").click(function(e) {
+		if($("#medication_delete_date").val() == ''){
+			helper.sendErrorMessage("errorDeleteMed", "Please enter a date");
+		} else {
+			medService.deleteMedication(new Medication(null,null,$("#medication_delete_date").val()));
+		}
+	});
+}
